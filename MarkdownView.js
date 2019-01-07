@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 
 import {
+  Text,
   View,
 } from 'react-native'
 
@@ -47,7 +48,7 @@ function mergeRules(baseRules, rules) {
 
 const IMAGE_LINK = "(?:\\[[^\\]]*\\]|[^\\[\\]]|\\](?=[^\\[]*\\]))*";
 const IMAGE_HREF_AND_TITLE = "\\s*<?((?:[^\\s\\\\]|\\\\.)*?)>?(?:\\s+['\"]([\\s\\S]*?)['\"])?"
-const IMAGE_SIZE = "(?:\\s+=([0-9]+)?x([0-9]+)?)?\\)\\s*"
+const IMAGE_SIZE = "(?:\\s+=([0-9]+)x([0-9]+))?\\)\\s*"
 
 const inlineRegex = (regex) => ((source, state) => state.inline ? regex.exec(source) : null)
 const unescapeUrl = (url) => url.replace(/\\([^0-9A-Za-z\s])/g, '$1')
@@ -81,10 +82,11 @@ class MarkdownView extends Component {
     onLinkPress?: (string) => void,
     styles?: Styles,
     children: string,
+    textProps?: Object,
   }
 
   render() {
-    const {rules = {}, styles = {}, onLinkPress} = this.props
+    const {rules = {}, styles = {}, onLinkPress, textProps = {}} = this.props
 
     const mergedStyles = mergeStyles(DefaultStyles, styles)
     const mergedRules = mergeRules(SimpleMarkdown.defaultRules, simpleMarkdownRules(mergeRules(DefaultRules, rules), mergedStyles))
@@ -93,7 +95,7 @@ class MarkdownView extends Component {
 
     const ast = SimpleMarkdown.parserFor(mergedRules)(markdown, {inline: false})
     const render = SimpleMarkdown.reactFor(SimpleMarkdown.ruleOutput(mergedRules, 'react'))
-    const initialRenderState = {onLinkPress: onLinkPress}
+    const initialRenderState = {onLinkPress: onLinkPress, textProps: textProps}
 
     return (
       <View style={this.props.style}>
@@ -148,7 +150,7 @@ MarkdownView.propTypes = {
    *   nptable, lheading, fence, def, escape, autolink, mailto, url, reflink, refimage,
    *
    */
-  rules: PropTypes.objectOf(PropTypes.objectOf(PropTypes.oneOfType([PropTypes.func, PropTypes.number]))),
+  rules: PropTypes.objectOf(PropTypes.objectOf(PropTypes.func)),
 
   /**
    * An object providing styles to be passed to a corresponding rule render method. Keys are
@@ -156,13 +158,18 @@ MarkdownView.propTypes = {
    * default style exists, they will me merged, with style properties defined here taking
    * precedence.
    */
-  styles: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.object, PropTypes.number])),
+  styles: PropTypes.objectOf(PropTypes.object),
 
   /**
    * Callback function for when a link is pressed. The callback receives the URL of the link as a
    * string (first and only argument).
    */
   onLinkPress: PropTypes.func,
+
+  /**
+  * Props passed to all <Text/> components. See https://facebook.github.io/react-native/docs/text#props
+  */
+  textProps: PropTypes.object,
 }
 
 export default MarkdownView

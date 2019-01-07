@@ -22,7 +22,7 @@ Compared to the current alternative Markdown components available for React Nati
 Install the node module:
 
     yarn add react-native-markdown-view
-    
+
 or with npm:
 
     npm install --save react-native-markdown-view
@@ -139,6 +139,11 @@ e.g.
 
 Callback function for when a link is pressed. The callback receives the URL of the link as a
 string (first and only argument).
+
+### textProps
+
+Props passed to all `<Text/>` components. See https://facebook.github.io/react-native/docs/text#props
+
 
 Here's an example using `Linking` from `react-native` to open link in default browser app:
 
