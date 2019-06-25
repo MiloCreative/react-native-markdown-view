@@ -64,9 +64,19 @@ function renderTableCell(cell, row, column, rowCount, columnCount, output, state
     contentStyle.push(styles.tableCellContentLastRow)
   }
 
+  if (column == 1) {
+    cellStyle.push(styles.tableCellFirstColumn)
+    contentStyle.push(styles.tableCellContentFirstColumn)
+  }
+
   if (column == columnCount) {
     cellStyle.push(styles.tableCellLastColumn)
     contentStyle.push(styles.tableCellContentLastColumn)
+  }
+
+  if (row == 1 && column == 1){
+    cellStyle.push(styles.tableCellFirstRowFirstColumn)
+    contentStyle.push(styles.tableCellContentFirstRowFirstColumn)
   }
 
   return <Cell rowId={row} id={column} key={column} style={cellStyle}>

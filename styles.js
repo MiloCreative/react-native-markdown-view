@@ -130,6 +130,8 @@ export default Object.freeze({
   tableCellLastColumn: {
     borderRightWidth: 0,
   },
+  tableCellFirstColumn: {},
+  tableCellFirstRowFirstColumn: {},
   tableCellContent: {},
   tableCellContentOddRow: {},
   tableCellContentEvenRow: {},
@@ -137,6 +139,8 @@ export default Object.freeze({
   tableCellContentOddColumn: {},
   tableCellContentEvenColumn: {},
   tableCellContentLastColumn: {},
+  tableCellContentFirstColumn: {},
+  tableCellContentFirstRowFirstColumn: {},
   u: {
     textDecorationLine: 'underline',
   },
